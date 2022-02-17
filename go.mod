@@ -1,3 +1,3 @@
-module github.com/allegro/bigcache/v3
+module github.com/jslyzt/bigcache
 
 go 1.16

@@ -1,4 +1,4 @@
-# BigCache [![Build Status](https://github.com/allegro/bigcache/workflows/build/badge.svg)](https://github.com/allegro/bigcache/actions?query=workflow%3Abuild)&nbsp;[![Coverage Status](https://coveralls.io/repos/github/allegro/bigcache/badge.svg?branch=master)](https://coveralls.io/github/allegro/bigcache?branch=master)&nbsp;[![GoDoc](https://godoc.org/github.com/allegro/bigcache?status.svg)](https://godoc.org/github.com/allegro/bigcache)&nbsp;[![Go Report Card](https://goreportcard.com/badge/github.com/allegro/bigcache)](https://goreportcard.com/report/github.com/allegro/bigcache)
+# BigCache [![Build Status](https://github.com/jslyzt/bigcache/workflows/build/badge.svg)](https://github.com/jslyzt/bigcache/actions?query=workflow%3Abuild)&nbsp;[![Coverage Status](https://coveralls.io/repos/github/allegro/bigcache/badge.svg?branch=master)](https://coveralls.io/github/allegro/bigcache?branch=master)&nbsp;[![GoDoc](https://godoc.org/github.com/jslyzt/bigcache?status.svg)](https://godoc.org/github.com/jslyzt/bigcache)&nbsp;[![Go Report Card](https://goreportcard.com/badge/github.com/jslyzt/bigcache)](https://goreportcard.com/report/github.com/jslyzt/bigcache)
 
 Fast, concurrent, evicting in-memory cache written to keep big number of entries without impact on performance.
 BigCache keeps entries on heap but omits GC for them. To achieve that, operations on byte slices take place,
@@ -11,7 +11,7 @@ Requires Go 1.12 or newer.
 ### Simple initialization
 
 ```go
-import "github.com/allegro/bigcache/v3"
+import "github.com/jslyzt/bigcache"
 
 cache, _ := bigcache.NewBigCache(bigcache.DefaultConfig(10 * time.Minute))
 
@@ -30,7 +30,7 @@ allocation can be avoided in that way.
 import (
 	"log"
 
-	"github.com/allegro/bigcache/v3"
+	"github.com/jslyzt/bigcache"
 )
 
 config := bigcache.Config {
@@ -89,13 +89,13 @@ if entry, err := cache.Get("my-unique-key"); err == nil {
 
 2. `CleanWindow` is a time. After that time, all the dead entries will be deleted, but not the entries that still have life.
 
-## [Benchmarks](https://github.com/allegro/bigcache-bench)
+## [Benchmarks](https://github.com/jslyzt/bigcache-bench)
 
 Three caches were compared: bigcache, [freecache](https://github.com/coocood/freecache) and map.
 Benchmark tests were made using an
 i7-6700K CPU @ 4.00GHz with 32GB of RAM on Ubuntu 18.04 LTS (5.2.12-050212-generic).
 
-Benchmarks source code can be found [here](https://github.com/allegro/bigcache-bench)
+Benchmarks source code can be found [here](https://github.com/jslyzt/bigcache-bench)
 
 ### Writes and reads
 
@@ -106,7 +106,7 @@ go version go1.13 linux/amd64
 go test -bench=. -benchmem -benchtime=4s ./... -timeout 30m
 goos: linux
 goarch: amd64
-pkg: github.com/allegro/bigcache/v3/caches_bench
+pkg: github.com/jslyzt/bigcache/caches_bench
 BenchmarkMapSet-8                     	12999889	       376 ns/op	     199 B/op	       3 allocs/op
 BenchmarkConcurrentMapSet-8           	 4355726	      1275 ns/op	     337 B/op	       8 allocs/op
 BenchmarkFreeCacheSet-8               	11068976	       703 ns/op	     328 B/op	       2 allocs/op
@@ -122,7 +122,7 @@ BenchmarkBigCacheGetParallel-8        	60547064	        86.1 ns/op	     152 B/op
 BenchmarkFreeCacheGetParallel-8       	50701280	       147 ns/op	     136 B/op	       3 allocs/op
 BenchmarkConcurrentMapGetParallel-8   	27353288	       175 ns/op	      24 B/op	       2 allocs/op
 PASS
-ok  	github.com/allegro/bigcache/v3/caches_bench	256.257s
+ok  	github.com/jslyzt/bigcache/caches_bench	256.257s
 ```
 
 Writes and reads in bigcache are faster than in freecache.
@@ -185,7 +185,7 @@ One of the advantage of bigcache over freecache is that you don’t need to know
 the size of the cache in advance, because when bigcache is full,
 it can allocate additional memory for new entries instead of
 overwriting existing ones as freecache does currently.
-However hard max size in bigcache also can be set, check [HardMaxCacheSize](https://godoc.org/github.com/allegro/bigcache#Config).
+However hard max size in bigcache also can be set, check [HardMaxCacheSize](https://godoc.org/github.com/jslyzt/bigcache#Config).
 
 ## HTTP Server
 
